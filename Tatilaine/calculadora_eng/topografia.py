@@ -17,3 +17,4 @@ def locacao_obra(coordenadas):
 
 def curva_nivel(pontos):
     # Implementar a lógica para traçado de curvas de nível utilizando métodos de interpolação
+    pass

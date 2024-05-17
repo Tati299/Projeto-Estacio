@@ -17,3 +17,4 @@ def tratamento_agua(metodo, parametros):
 
 def tratamento_esgoto(metodo, parametros):
     # Implementar a lógica para cálculo de estações de tratamento de esgoto utilizando métodos como ativação por lodo
+    pass

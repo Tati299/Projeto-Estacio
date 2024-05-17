@@ -33,7 +33,7 @@ def interface():
         a = float(entrada_limite_a.get())
         b = float(entrada_limite_b.get())
         n = int(entrada_pontos.get())
-        resultado = integral_numerica(funcao_str, a, b, n)
+        resultado = "integral_numerica"(funcao_str, a, b, n)
         if resultado is not None:
             label_resultado_integracao.config(text=f"Resultado: {resultado:.4f}")
 
@@ -96,7 +96,7 @@ def interface():
         sinal_str = entrada_sinal.get()
         try:
             sinal = eval(sinal_str)
-            fourier = transformada_fourier(sinal)
+            fourier = "transformada_fourier"(sinal)
             plt.plot(np.abs(fourier))
             plt.title("Transformada de Fourier")
             plt.xlabel("Frequência")
@@ -114,14 +114,14 @@ def interface():
     botao_fourier.pack()
 
  # Interface gráfica principal
-app = tk.Tk()
+app = "tk".Tk()
 app.title("Calculadora Avançada")
 
 # Criando abas para diferentes funcionalidades
-aba_basica = tk.Frame(app)
-aba_avancada = tk.Frame(app)
-aba_memoria = tk.Frame(app)
-aba_engenharia_civil = tk.Frame(app)
+aba_basica = "tk".Frame(app)
+aba_avancada = "tk".Frame(app)
+aba_memoria = "tk".Frame(app)
+aba_engenharia_civil = "tk".Frame(app)
 
 aba_basica.pack(side="top", fill="both", expand=True)
 aba_avancada.pack(side="top", fill="both", expand=True)
@@ -129,38 +129,38 @@ aba_memoria.pack(side="top", fill="both", expand=True)
 aba_engenharia_civil.pack(side="top", fill="both", expand=True)
 
 # Funções básicas (soma, subtração, multiplicação, divisão)
-label_titulo_basica = tk.Label(aba_basica, text="Funções Básicas")
+label_titulo_basica = "tk".Label(aba_basica, text="Funções Básicas")
 label_titulo_basica.pack()
 
-label_a_soma = tk.Label(aba_basica, text="Valor de a:")
+label_a_soma = "tk".Label(aba_basica, text="Valor de a:")
 label_a_soma.pack()
-entrada_a_soma = tk.Entry(aba_basica)
+entrada_a_soma = "tk".Entry(aba_basica)
 entrada_a_soma.pack()
 
-label_b_soma = tk.Label(aba_basica, text="Valor de b:")
+label_b_soma = "tk".Label(aba_basica, text="Valor de b:")
 label_b_soma.pack()
-entrada_b_soma = tk.Entry(aba_basica)
+entrada_b_soma = "tk".Entry(aba_basica)
 entrada_b_soma.pack()
 
-botao_somar = tk.Button(aba_basica, text="Somar", command=lambda: soma_interface(entrada_a_soma, entrada_b_soma))
+botao_somar = "tk".Button(aba_basica, text="Somar", command=lambda: "soma_interface"(entrada_a_soma, entrada_b_soma))
 botao_somar.pack()
 
-label_resultado_soma = tk.Label(aba_basica, text="Resultado:")
+label_resultado_soma = "tk".Label(aba_basica, text="Resultado:")
 label_resultado_soma.pack()
 
 # ... (interfaces para as outras funções básicas: subtração, multiplicação, divisão)
 
 # Funções avançadas (integração, derivada, transformada de Fourier)
-label_titulo_avancada = tk.Label(aba_avancada, text="Funções Avançadas")
+label_titulo_avancada = "tk".Label(aba_avancada, text="Funções Avançadas")
 label_titulo_avancada.pack()
 
 # ... (implementar interfaces para integração, derivada e transformada de Fourier)
 
 # Funções de memória (adicionar, remover, consultar, limpar)
-label_titulo_memoria = tk.Label(aba_memoria, text="Memória")
+label_titulo_memoria = "tk".Label(aba_memoria, text="Memória")
 label_titulo_memoria.pack()
 
 # ... (implementar interfaces para as funções de memória)
 
 # Funções de Engenharia Civil (momento fletor, cortante, etc.)
-label_titulo_engenharia_civil = tk.Label(aba_engenharia_civil, text="Engenharia Civil")
+label_titulo_engenharia_civil = "tk".Label(aba_engenharia_civil, text="Engenharia Civil")

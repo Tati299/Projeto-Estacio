@@ -36,7 +36,7 @@ def potenciacao(base, expoente):
 def raiz_quadrada(numero):
     if numero < 0:
         return None
-    return sqrt(numero)
+    return "sqrt"(numero)
 
 def raiz_n_esima(numero, indice):
     if numero < 0 and indice % 2 == 0:
