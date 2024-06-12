@@ -15,21 +15,6 @@ def divisao(a, b):
     else:
         return a / b
 
-# Funções matemáticas básicas
-def soma(a, b):
-    return a + b
-
-def subtracao(a, b):
-    return a - b
-
-def multiplicacao(a, b):
-    return a * b
-
-def divisao(a, b):
-    if b == 0:
-        return None
-    return a / b
-
 def potenciacao(base, expoente):
     return base ** expoente
 
