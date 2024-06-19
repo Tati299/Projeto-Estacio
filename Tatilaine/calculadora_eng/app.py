@@ -1,7 +1,5 @@
-from tkinter import *
-from tkinter import messagebox
-from tkinter import ttk
 import tkinter as tk
+from tkinter import messagebox, ttk
 import sys
 import os
 
@@ -11,38 +9,21 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 # Importa o módulo operacoes_basicas
 import operacoes_basicas
 
-def abrir_calculos_estruturais():
-    messagebox.showinfo("Informação", "Abrindo cálculos estruturais...")
-
-def abrir_derivadas_numericas():
-    messagebox.showinfo("Informação", "Abrindo derivadas numéricas...")
-
-def abrir_transformada_fourier():
-    messagebox.showinfo("Informação", "Abrindo transformada de Fourier...")
-
-def abrir_funcionalidade_basica():
-    messagebox.showinfo("Informação", "Abrindo funcionalidade básica...")
-
-def abrir_funcionalidade_memoria():
-    messagebox.showinfo("Informação", "Abrindo funcionalidade de memória...")
-
-def abrir_funcoes_engenharia_civil():
-    messagebox.showinfo("Informação", "Abrindo funções de engenharia civil...")
-
-def abrir_funcoes_matematicas():
-    messagebox.showinfo("Informação", "Abrindo funções matemáticas...")
-
-def abrir_hidraulica_saneamento():
-    messagebox.showinfo("Informação", "Abrindo hidráulica e saneamento...")
-
-def abrir_integracao_numerica():
-    messagebox.showinfo("Informação", "Abrindo integração numérica...")
-
-def abrir_mecanica_dos_solos():
-    messagebox.showinfo("Informação", "Abrindo mecânica dos solos...")
-
-def abrir_operacoes_com_potencias_raizes():
-    messagebox.showinfo("Informação", "Abrindo operações com potências e raízes...")
+# Função para calcular o Momento Fletor
+def calcular_momento_fletor():
+    try:
+        # Obter os valores de entrada e converter para float
+        carga = float(entrada_carga.get())
+        distancia = float(entrada_distancia.get())
+        
+        # Calcular o Momento Fletor (M = carga * distância)
+        momento_fletor = carga * distancia
+        
+        # Exibir o resultado em uma messagebox
+        messagebox.showinfo("Resultado", f"O Momento Fletor é {momento_fletor} Nm")
+        
+    except ValueError:
+        messagebox.showerror("Erro", "Por favor, insira números válidos para a carga e a distância.")
 
 def abrir_operacoes_basicas():
     def calcular():
@@ -66,9 +47,6 @@ def abrir_operacoes_basicas():
             resultado = operacoes_basicas.potenciacao(a, b)
         elif operacao == "Raiz Quadrada":
             resultado = operacoes_basicas.raiz_quadrada(a)
-            b = None  # Não precisa de b para raiz quadrada
-        elif operacao == "Raiz n-ésima":
-            resultado = operacoes_basicas.raiz_n_esima(a, b)
 
         if resultado is not None:
             resultado_label.config(text=f"Resultado: {resultado}")
@@ -81,38 +59,31 @@ def abrir_operacoes_basicas():
     operacao_var = tk.StringVar(nova_janela)
     operacao_var.set("Soma")  # Operação padrão
 
-    operacoes = ["Soma", "Subtração", "Multiplicação", "Divisão", "Potenciação", "Raiz Quadrada", "Raiz n-ésima"]
+    operacoes = ["Soma", "Subtração", "Multiplicação", "Divisão", "Potenciação", "Raiz Quadrada"]
     operacao_menu = tk.OptionMenu(nova_janela, operacao_var, *operacoes)
-    operacao_menu.pack(pady=5)
+    operacao_menu.grid(row=0, column=0, padx=10, pady=5)
 
     entrada_a = tk.Entry(nova_janela)
-    entrada_a.pack(pady=5)
-    entrada_a.insert(0, "Valor 7")
+    entrada_a.grid(row=1, column=0, padx=10, pady=5)
+    entrada_a.insert(0, "Valor 1")
 
     entrada_b = tk.Entry(nova_janela)
-    entrada_b.pack(pady=5)
-    entrada_b.insert(0, "Valor B")
+    entrada_b.grid(row=2, column=0, padx=10, pady=5)
+    entrada_b.insert(0, "Valor 2")
+
+    # Ajuste para mostrar apenas um campo de entrada conforme a operação selecionada
+    def mostrar_entrada_b():
+        entrada_b.grid() if operacao_var.get() != "Raiz Quadrada" else entrada_b.grid_remove()
+
+    operacao_var.trace_add('write', lambda *args: mostrar_entrada_b())
 
     calcular_button = tk.Button(nova_janela, text="Calcular", command=calcular)
-    calcular_button.pack(pady=5)
+    calcular_button.grid(row=3, column=0, padx=10, pady=5)
 
     resultado_label = tk.Label(nova_janela, text="Resultado:")
-    resultado_label.pack(pady=5)
-
-def abrir_operacoes_com_memoria():
-    messagebox.showinfo("Informação", "Abrindo operações com memória...")
-
-def abrir_potenciacao_radiciacao():
-    messagebox.showinfo("Informação", "Abrindo potenciação e radiciação...")
-
-def abrir_topografia():
-    messagebox.showinfo("Informação", "Abrindo topografia...")
-
-def abrir_tratamento_de_erros():
-    messagebox.showinfo("Informação", "Abrindo tratamento de erros...")
+    resultado_label.grid(row=4, column=0, padx=10, pady=5)
 
 # Interface gráfica principal
-
 app = tk.Tk()
 app.title("Calculadora Engenharia")
 
@@ -120,10 +91,10 @@ app.title("Calculadora Engenharia")
 notebook = ttk.Notebook(app)
 
 # Criando frames para cada aba
-aba_basica = Frame(notebook)
-aba_avancada = Frame(notebook)
-aba_memoria = Frame(notebook)
-aba_engenharia_civil = Frame(notebook)
+aba_basica = ttk.Frame(notebook)
+aba_avancada = ttk.Frame(notebook)
+aba_memoria = ttk.Frame(notebook)
+aba_engenharia_civil = ttk.Frame(notebook)
 
 # Adicionando os frames ao notebook com seus respectivos títulos
 notebook.add(aba_basica, text="Básica")
@@ -134,64 +105,33 @@ notebook.add(aba_engenharia_civil, text="Engenharia Civil")
 notebook.pack(expand=1, fill="both")
 
 # Funções básicas (soma, subtração, multiplicação, divisão)
-label_titulo_basica = Label(aba_basica, text="Funções Básicas")
-label_titulo_basica.pack(pady=10)
+label_titulo_basica = tk.Label(aba_basica, text="Funções Básicas")
+label_titulo_basica.grid(row=0, column=0, padx=10, pady=10)
 
 botao_operacoes_basicas = tk.Button(aba_basica, text="Operações Básicas", command=abrir_operacoes_basicas)
-botao_operacoes_basicas.pack(pady=5)
-
-botao_potenciacao_radiciacao = Button(aba_basica, text="Potenciação e Radiciação", command=abrir_potenciacao_radiciacao)
-botao_potenciacao_radiciacao.pack(pady=5)
-
-botao_funcionalidade_basica = Button(aba_basica, text="Funcionalidade Básica", command=abrir_funcionalidade_basica)
-botao_funcionalidade_basica.pack(pady=5)
-
-# Funções avançadas (integração, derivada, transformada de Fourier)
-label_titulo_avancada = Label(aba_avancada, text="Funções Avançadas")
-label_titulo_avancada.pack(pady=10)
-
-botao_calculos_estruturais = Button(aba_avancada, text="Cálculos Estruturais", command=abrir_calculos_estruturais)
-botao_calculos_estruturais.pack(pady=5)
-
-botao_derivadas_numericas = Button(aba_avancada, text="Derivadas Numéricas", command=abrir_derivadas_numericas)
-botao_derivadas_numericas.pack(pady=5)
-
-botao_transformada_fourier = Button(aba_avancada, text="Transformada de Fourier", command=abrir_transformada_fourier)
-botao_transformada_fourier.pack(pady=5)
-
-botao_integracao_numerica = Button(aba_avancada, text="Integração Numérica", command=abrir_integracao_numerica)
-botao_integracao_numerica.pack(pady=5)
-
-botao_funcoes_matematicas = Button(aba_avancada, text="Funções Matemáticas", command=abrir_funcoes_matematicas)
-botao_funcoes_matematicas.pack(pady=5)
-
-botao_tratamento_de_erros = Button(aba_avancada, text="Tratamento de Erros e Mensagem", command=abrir_tratamento_de_erros)
-botao_tratamento_de_erros.pack(pady=5)
-
-# Funções de memória (adicionar, remover, consultar, limpar)
-label_titulo_memoria = Label(aba_memoria, text="Funções de Memória")
-label_titulo_memoria.pack(pady=10)
-
-botao_operacoes_com_memoria = Button(aba_memoria, text="Operações com Memória", command=abrir_operacoes_com_memoria)
-botao_operacoes_com_memoria.pack(pady=5)
-
-botao_funcionalidade_memoria = Button(aba_memoria, text="Funcionalidade de Memória", command=abrir_funcionalidade_memoria)
-botao_funcionalidade_memoria.pack(pady=5)
+botao_operacoes_basicas.grid(row=1, column=0, padx=10, pady=5)
 
 # Funções de Engenharia Civil (momento fletor, cortante, etc.)
-label_titulo_engenharia_civil = Label(aba_engenharia_civil, text="Funções de Engenharia Civil")
-label_titulo_engenharia_civil.pack(pady=10)
+label_titulo_engenharia_civil = tk.Label(aba_engenharia_civil, text="Funções de Engenharia Civil")
+label_titulo_engenharia_civil.grid(row=0, column=0, padx=10, pady=10)
 
-botao_funcoes_engenharia_civil = Button(aba_engenharia_civil, text="Funções de Engenharia Civil", command=abrir_funcoes_engenharia_civil)
-botao_funcoes_engenharia_civil.pack(pady=5)
+label_carga = tk.Label(aba_engenharia_civil, text="Carga (N):")
+label_carga.grid(row=1, column=0, padx=10, pady=5, sticky=tk.W)
 
-botao_hidraulica_saneamento = Button(aba_engenharia_civil, text="Hidráulica e Saneamento", command=abrir_hidraulica_saneamento)
-botao_hidraulica_saneamento.pack(pady=5)
+entrada_carga = tk.Entry(aba_engenharia_civil)
+entrada_carga.grid(row=1, column=1, padx=10, pady=5)
 
-botao_mecanica_dos_solos = Button(aba_engenharia_civil, text="Mecânica dos Solos", command=abrir_mecanica_dos_solos)
-botao_mecanica_dos_solos.pack(pady=5)
+label_distancia = tk.Label(aba_engenharia_civil, text="Distância (m):")
+label_distancia.grid(row=2, column=0, padx=10, pady=5, sticky=tk.W)
 
-botao_topografia = Button(aba_engenharia_civil, text="Topografia", command=abrir_topografia)
-botao_topografia.pack(pady=5)
+entrada_distancia = tk.Entry(aba_engenharia_civil)
+entrada_distancia.grid(row=2, column=1, padx=10, pady=5)
+
+botao_calcular_momento_fletor = tk.Button(aba_engenharia_civil, text="Calcular Momento Fletor", command=calcular_momento_fletor)
+botao_calcular_momento_fletor.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+
+# Botões adicionais de Engenharia Civil
+botao_funcoes_engenharia_civil = tk.Button(aba_engenharia_civil, text="Outras Operações", command=lambda: messagebox.showinfo("Informação", "Abrindo outras operações de engenharia civil..."))
+botao_funcoes_engenharia_civil.grid(row=4, column=0, columnspan=2, pady=5)
 
 app.mainloop()
